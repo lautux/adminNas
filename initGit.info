@@ -11,3 +11,6 @@ git push -u origin master
 git add initGit.info
 git commit -m 'Ajout info git'
 git push -u origin master
+git status
+git commit -a -m 'modif initGit'
+git push
