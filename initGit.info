@@ -1,0 +1,10 @@
+cd /data/adminNas
+git add .
+git config --global user.email 'lautux76@gmail.com'
+git config --global user.name 'lautux'
+git commit -m 'Initialisation du dépôt'
+git remote add origin https://github.com/lautux/adminNas.git
+git push -u origin master
+cat ~/.ssh/id_rsa.pub
+git remote set-url origin git@github.com:lautux/adminnas.git
+git push -u origin master
