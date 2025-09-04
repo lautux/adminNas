@@ -1,3 +1,4 @@
+# Initialisation du dépôt
 cd /data/adminNas
 git add .
 git config --global user.email 'lautux76@gmail.com'
@@ -8,9 +9,15 @@ git push -u origin master
 cat ~/.ssh/id_rsa.pub
 git remote set-url origin git@github.com:lautux/adminnas.git
 git push -u origin master
+
+# Ajout d'un fichier
 git add initGit.info
 git commit -m 'Ajout info git'
 git push -u origin master
+
+# Envoyer toutes les modifications
 git status
 git commit -a -m 'modif initGit'
 git push
+
+# Récupérer toutes les mises à jour du dépôt distant en local
