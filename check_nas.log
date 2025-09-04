@@ -1,0 +1,42 @@
+2025-09-03 10:30:17,969 - INFO - getGlobalStatus - self.raidDevices : ['/dev/md0']
+2025-09-03 10:30:59,810 - INFO - getGlobalStatus - self.raidDevices : ['/dev/md0']
+2025-09-03 10:31:05,924 - INFO - getGlobalStatus - self.raidDevices : ['/dev/md0']
+2025-09-03 10:31:26,601 - INFO - getGlobalStatus - self.raidDevices : ['/dev/md0']
+2025-09-03 10:33:51,394 - DEBUG - getGlobalStatus - self.raidDevices : ['/dev/md0']
+2025-09-03 10:34:29,786 - DEBUG - getGlobalStatus - self.raidDevices : ['/dev/md0']
+2025-09-03 10:35:27,397 - DEBUG - getGlobalStatus - self.raidDevices : ['/dev/md0']
+2025-09-03 10:35:27,397 - DEBUG - getRaidStatus - device : /dev/md0
+2025-09-03 10:36:29,528 - DEBUG - getGlobalStatus - self.raidDevices : ['/dev/md0']
+2025-09-03 10:36:29,528 - DEBUG - getRaidStatus - device : /dev/md0
+2025-09-03 10:36:29,528 - DEBUG - getRaidStatus - cmd : None
+2025-09-03 10:39:07,201 - DEBUG - getGlobalStatus - self.raidDevices : ['/dev/md0']
+2025-09-03 10:39:07,201 - DEBUG - getRaidStatus - device : /dev/md0
+2025-09-03 10:39:07,201 - DEBUG - getRaidStatus - self.checkCommand : ['sudo', 'mdadm', '--detail']
+2025-09-03 10:39:07,201 - DEBUG - getRaidStatus - cmd : None
+2025-09-03 10:39:43,831 - DEBUG - getGlobalStatus - self.raidDevices : ['/dev/md0']
+2025-09-03 10:39:43,831 - DEBUG - getRaidStatus - device : /dev/md0
+2025-09-03 10:39:43,831 - DEBUG - getRaidStatus - self.checkCommand : ['sudo', 'mdadm', '--detail']
+2025-09-03 10:39:43,831 - DEBUG - getRaidStatus - self.checkCommand : ['sudo', 'mdadm', '--detail', '/dev/md0']
+2025-09-04 14:30:46,937 - DEBUG - getGlobalStatus - DEBUT
+2025-09-04 14:30:46,959 - DEBUG - getRaidStatus - DEBUT
+2025-09-04 14:30:46,986 - DEBUG - getRaidStatus - FIN
+2025-09-04 14:30:46,987 - DEBUG - getGlobalStatus - FIN
+2025-09-04 14:30:46,987 - DEBUG - getRaidDetail - DEBUT
+2025-09-04 14:30:47,011 - DEBUG - getRaidDetail - FIN
+2025-09-04 14:34:09,147 - DEBUG - getGlobalStatus - DEBUT
+2025-09-04 14:34:09,147 - DEBUG - getRaidStatus - DEBUT
+2025-09-04 14:34:09,157 - DEBUG - getRaidStatus - FIN
+2025-09-04 14:34:09,157 - DEBUG - getGlobalStatus - FIN
+2025-09-04 14:34:09,157 - DEBUG - getRaidDetail - DEBUT
+2025-09-04 14:34:09,157 - DEBUG - cmd : ['sudo', 'mdadm', '--detail', '/dev/md0', '/dev/md0']
+2025-09-04 14:34:09,170 - DEBUG - getRaidDetail - FIN
+2025-09-04 14:34:47,408 - DEBUG - getGlobalStatus - DEBUT
+2025-09-04 14:34:47,408 - DEBUG - getRaidStatus - DEBUT
+2025-09-04 14:34:47,418 - DEBUG - getRaidStatus - FIN
+2025-09-04 14:34:47,418 - DEBUG - getGlobalStatus - FIN
+2025-09-04 14:34:47,418 - DEBUG - getRaidDetail - DEBUT
+2025-09-04 14:34:47,418 - DEBUG - cmd : ['sudo', 'mdadm', '--detail', '/dev/md0', '/dev/md0']
+2025-09-04 14:34:47,429 - DEBUG - getRaidDetail - FIN
+2025-09-04 14:42:36,440 - DEBUG - cmd : ['sudo', 'mdadm', '--detail', '/dev/md0']
+2025-09-04 14:42:41,304 - DEBUG - cmd : ['sudo', 'mdadm', '--detail', '/dev/md0']
+2025-09-04 14:43:11,749 - DEBUG - cmd : ['sudo', 'mdadm', '--detail', '/dev/md0']
