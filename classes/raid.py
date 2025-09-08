@@ -20,15 +20,17 @@ class Raid:
         self.raidDevices = devices
         self.logger = logger
         self.checkCommand = ["sudo", "mdadm", "--detail"]
+        self.logger.debug(f"Raid.__init__")
 
     def getGlobalStatus(self) -> bool:
         try:
+            self.logger.debug(f"Raid.getGlobalStatus")
             status = True
             for dev in self.raidDevices:
                 if not self.getRaidStatus(dev):
                     status = False
                     break
-        except subprocess.CalledProcessError as e:
+        except Exception as e:
             status = False
             self.logger.error(f"Error in getGlobalStatus : {e.stderr}")
         finally:
@@ -36,6 +38,7 @@ class Raid:
 
     def getRaidStatus(self, device) -> bool:
         try:
+            self.logger.debug(f"Raid.getRaidStatus")
             status = False
             cmd = self.checkCommand.copy()
             cmd.append(device)
@@ -50,7 +53,7 @@ class Raid:
                 if "State :" in line:
                     state = line.split(":")[1].strip()
             status = (state == "clean")
-        except subprocess.CalledProcessError as e:
+        except Exception as e:
             status = False
             self.logger.error(f"Error in getRaidStatus : {e.stderr}")
         finally:
@@ -58,6 +61,7 @@ class Raid:
 
     def getRaidDetail(self, device) -> str:
         try:
+            self.logger.debug(f"Raid.getRaidDetail")
             raidDetail = ""
             cmd = self.checkCommand.copy()
             cmd.append(device)
@@ -69,7 +73,7 @@ class Raid:
                 check=True
             )
             raidDetail = result.stdout
-        except subprocess.CalledProcessError as e:
+        except Exception as e:
             raidDetail = ""
             self.logger.error(f"Error in getRaidDetail : {e.stderr}")
         finally:

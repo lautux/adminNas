@@ -6,59 +6,74 @@ class Smart:
     """
     Class to manage smart data for hdd
     """
-    smartDevice  = ""
-    smartDetail  = ""
+    smartDevices = []
     checkCommand = ""
+    logger       = None
 
-    def __init__(self, dev):
+    def __init__(self, devices, logger=None):
         """
         Constructor
 
         Parameters:
-        dev (str): Linux device corresponding to the hdd. Ex: /dev/sda.
+        devices (array): Linux devices corresponding to the hdd. Ex: /dev/sda.
         """
-        self.smartDevice = dev
-        self.checkCommand = ["sudo", "smartctl", "-H", self.smartDevice]
+        self.smartDevices = devices
+        self.logger = logger
+        self.checkCommand = ["sudo", "smartctl", "-H"]
 
     def getGlobalStatus(self) -> bool:
-        state = self.getSmartState()
-        #print(state)
-        return state == "PASSED"
-
-    def getSmartState(self) -> str:
         try:
-            state = "unknow"
-            result = subprocess.run(
-                self.checkCommand,
-                capture_output=True,
-                text=True,
-                check=True
-            )
-            self.smartDetail = result.stdout
-            #print(self.smartDetail)
-            for line in self.smartDetail.splitlines():
+            self.logger.debug(f"Smart.getGlobalStatus - DEBUT")
+            status = True
+            for dev in self.smartDevices:
+                if not self.getSmartStatus(dev):
+                    status = False
+                    break
+        except Exception as e:
+            status = False
+            self.logger.error(f"Error in getGlobalStatus : {e.stderr}")
+        finally:
+            self.logger.debug(f"Smart.getGlobalStatus - FIN")
+            return status
+
+    def getSmartStatus(self, device) -> bool:
+        try:
+            self.logger.debug(f"Smart.getSmartStatus - DEBUT")
+            status = False
+            state = None
+            for line in self.getSmartDetail(device).splitlines():
                 if "test result:" in line:
                     state = line.split(":")[1].strip()
-            return state
-        
-        except subprocess.CalledProcessError as e:
-            print(f"Error in getSmartState : {e.stderr}")
-            return False
+            self.logger.debug(f"state : {state}")
+            status = (state == "PASSED")
+        except Exception as e:
+            status = False
+            self.logger.error(f"Error in getSmartStatus : {e.stderr}")
+        finally:
+            self.logger.debug(f"Smart.getSmartStatus - FIN")
+            return status
 
-    def getSmartDetail(self) -> str:
+    def getSmartDetail(self, device) -> str:
         try:
-            state = "unknow"
+            self.logger.debug(f"Smart.getSmartDetail - DEBUT")
+            smartDetail = None
+            cmd = self.checkCommand.copy()
+            cmd.append(device)
+            self.logger.debug(f"Smart.getSmartDetail - cmd : {cmd}")
             result = subprocess.run(
-                ["sudo", "smartctl", "-H", self.smartDevice],
+                cmd,
                 capture_output=True,
                 text=True,
                 check=True
             )
-            return result.stdout
-        
-        except subprocess.CalledProcessError as e:
-            print(f"Error in getSmartDetail : {e.stderr}")
-            return False
+            smartDetail = result.stdout
+            self.logger.debug(f"smartDetail : {smartDetail}")
+        except Exception as e:
+            smartDetail = None
+            self.logger.error(f"Error in getSmartDetail : {e}")
+        finally:
+            self.logger.debug(f"Smart.getSmartDetail - FIN")
+            return smartDetail
 
 
 #sudo smartctl -H /dev/sda 2>/dev/null | grep -E "SMART overall-health|SMART Health Status|test result" | grep -Eo "PASSED|OK|FAILED" | sed "s/OK/PASSED/"
