@@ -1,3 +1,12 @@
 LOG_FILE_PATH = "/tmp/check_nas.log"
 RAID_PATHS = ["/dev/md0",]
 HDD_PATHS = ["/dev/sda", "/dev/sdb", "/dev/sdc"]
+MAIL_SMTP = "smtp.free.fr"
+MAIL_PORT = 587  # Port pour TLS
+MAIL_USER = "merlet.l@free.fr"
+MAIL_PASSWORD = "u6V!5XVxTjYFjx"
+NAS_PHOTOS_PATH = "/mnt/raid4to/Photos/"
+PCLOUD_PHOTOS_PATH = "/NAS/Photos/"
+NAS_DATA_PATH = "/mnt/raid4to/Data/"
+PCLOUD_DATA_PATH = "/NAS/Data/"
+NAS2PCLOUD_LOG_DIR = "/home/laurent/Documents/rclone/"
