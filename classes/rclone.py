@@ -6,7 +6,7 @@ import traceback
 from classes.logger import Logger
 from datetime import datetime
 
-class Rsync:
+class Rclone:
     """
     Class to manage sync between nas and pcloud
     """
@@ -22,14 +22,14 @@ class Rsync:
         self.logger = logger
 
 
-    def sendPhotos(self) -> bool:
+    def __send(self, localDir:str, remoteDir:str) -> bool:
         try:
-            self.logger.debug(f"Nas2Pcloud.sendPhotos")
+            self.logger.debug(f"Rclone.send")
             status = False
             currentDatetime = datetime.now().strftime("%Y%m%d_%H%M%S")
-            logFileName = f"rclone_photo_{currentDatetime}.log"
+            logFileName = f"rclone_{currentDatetime}.log"
             logFilePath = f"{config.NAS2PCLOUD_LOG_DIR}{logFileName}"
-            cmd = f"rclone copy --dry-run --verbose --progress --log-file={logFilePath} {config.NAS_PHOTOS_PATH} pcloud:{config.PCLOUD_PHOTOS_PATH}"
+            cmd = f"rclone copy {config.RCLONE_OPTIONS} --log-file={logFilePath} {localDir} pcloud:{remoteDir}"
             self.logger.info(cmd)
             result = subprocess.run(
                 cmd,
@@ -45,5 +45,11 @@ class Rsync:
         finally:
             return status
 
+
+    def sendPhotos(self) -> bool:
+        return self.__send(config.NAS_PHOTOS_PATH, config.PCLOUD_PHOTOS_PATH)
+
+    def sendData(self) -> bool:
+        return self.__send(config.NAS_DATA_PATH, config.NAS_DATA_PATH)
 
     

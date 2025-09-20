@@ -3,12 +3,12 @@
 import logging
 import config
 from classes.logger import Logger
-from classes.rsync import Rsync
+from classes.rclone import Rclone
 
 log = Logger(f"{config.LOG_FILE_PATH}", logging.DEBUG)
-rsync = Rsync(log)
+rclone = Rclone(log)
 print("rsync.sendPhotos() - DEBUT")
-rsync.sendPhotos()
+rclone.sendData()
 print("rsync.sendPhotos() - FIN")
 
 
