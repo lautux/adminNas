@@ -1,6 +1,17 @@
 #!/usr/bin/env python3
 
-print("coucou")
+import logging
+import config
+from classes.logger import Logger
+from classes.rsync import Rsync
+
+log = Logger(f"{config.LOG_FILE_PATH}", logging.DEBUG)
+rsync = Rsync(log)
+print("rsync.sendPhotos() - DEBUT")
+rsync.sendPhotos()
+print("rsync.sendPhotos() - FIN")
+
+
 
 """
 import smtplib
