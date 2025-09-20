@@ -50,6 +50,9 @@ class Rclone:
         return self.__send(config.NAS_PHOTOS_PATH, config.PCLOUD_PHOTOS_PATH)
 
     def sendData(self) -> bool:
-        return self.__send(config.NAS_DATA_PATH, config.NAS_DATA_PATH)
+        return self.__send(config.NAS_DATA_PATH, config.PCLOUD_DATA_PATH)
+    
+    def sendTest(self) -> bool:
+        return self.__send(config.NAS_TEST_PATH, config.PCLOUD_TEST_PATH)
 
     
