@@ -1,0 +1,17 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Exec test.py on NAS",
+            "type": "shell",
+            "command": "ssh laurent@192.168.1.63 -i ~/.ssh/nas_laurent_rsa 'cd /data/adminNas ; git pull ; ./test.py'",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

@@ -3,7 +3,7 @@
 ###############################################################################
 # Import classes
 ###############################################################################
-import logging
+#import logging
 import config
 import subprocess
 from classes.logger import Logger
@@ -32,7 +32,7 @@ class Nas2Pcloud:
             currentDatetime = datetime.now().strftime("%Y%m%d_%H%M%S")
             logFileName = f"rclone_photo_{currentDatetime}.log"
             logFilePath = f"{config.NAS2PCLOUD_LOG_DIR}{logFileName}"
-            cmd = f"rclone copy --verbose --progress --log-file={logFilePath} {config.NAS_PHOTOS_PATH} pcloud:{config.PCLOUD_PHOTOS_PATH}"
+            cmd = f"rclone copy --dry-run --verbose --progress --log-file={logFilePath} {config.NAS_PHOTOS_PATH} pcloud:{config.PCLOUD_PHOTOS_PATH}"
             result = subprocess.run(
                 cmd,
                 capture_output=True,

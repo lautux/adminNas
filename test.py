@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+print("coucou")
+
+"""
 import smtplib
 import sys
 from email.mime.text import MIMEText
@@ -44,3 +47,4 @@ try:
 except Exception as e:
         print(f"Erreur lors de l'envoi de l'email : {e}")
 
+"""
