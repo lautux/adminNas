@@ -2,6 +2,7 @@
 
 import config
 import subprocess
+import traceback
 from classes.logger import Logger
 from datetime import datetime
 
@@ -11,7 +12,7 @@ class Rsync:
     """
     logger = None
 
-    def __init__(self, logger=None):
+    def __init__(self, logger:Logger=None):
         """
         Constructor
 
@@ -29,6 +30,7 @@ class Rsync:
             logFileName = f"rclone_photo_{currentDatetime}.log"
             logFilePath = f"{config.NAS2PCLOUD_LOG_DIR}{logFileName}"
             cmd = f"rclone copy --dry-run --verbose --progress --log-file={logFilePath} {config.NAS_PHOTOS_PATH} pcloud:{config.PCLOUD_PHOTOS_PATH}"
+            self.logger.info(cmd)
             result = subprocess.run(
                 cmd,
                 capture_output=True,
@@ -36,9 +38,10 @@ class Rsync:
                 check=True
             )
             status = (result.returncode == 0)
+            self.logger.info("Command executed successfully")
         except Exception as e:
             status = False
-            self.logger.error(f"Error in Nas2Pcloud.sendPhotos : {e.stderr}")
+            self.logger.error(f"Exception occured : {traceback.format_exc()}")
         finally:
             return status
 
