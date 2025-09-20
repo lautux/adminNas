@@ -63,4 +63,3 @@ class Rclone:
     def sendTest(self) -> bool:
         return self.__send(config.NAS_TEST_PATH, config.PCLOUD_TEST_PATH)
 
-    

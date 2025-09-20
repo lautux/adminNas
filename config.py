@@ -12,4 +12,5 @@ PCLOUD_DATA_PATH = "/NAS/Data/"
 NAS_TEST_PATH = "/mnt/raid4to/test/"
 PCLOUD_TEST_PATH = "/NAS/test/"
 NAS2PCLOUD_LOG_DIR = "/home/laurent/Documents/rclone/"
-RCLONE_OPTIONS = ["--dry-run", "--verbose", "--progress"]
+#RCLONE_OPTIONS = ["--dry-run", "--verbose", "--progress"]
+RCLONE_OPTIONS = ["--verbose", "--progress"]
