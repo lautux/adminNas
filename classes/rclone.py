@@ -29,14 +29,22 @@ class Rclone:
             currentDatetime = datetime.now().strftime("%Y%m%d_%H%M%S")
             logFileName = f"rclone_{currentDatetime}.log"
             logFilePath = f"{config.NAS2PCLOUD_LOG_DIR}{logFileName}"
-            cmd = f"rclone copy {config.RCLONE_OPTIONS} --log-file={logFilePath} {localDir} pcloud:{remoteDir}"
-            self.logger.info(cmd)
+            cmd = [
+                "rclone",
+                "copy",
+                *config.RCLONE_OPTIONS,
+                f"--log-file={logFilePath}",
+                localDir,
+                f"pcloud:{remoteDir}"
+            ]
             result = subprocess.run(
                 cmd,
-                capture_output=True,
-                text=True,
-                check=True
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True
             )
+            self.logger.info(f"stdout : {result.stdout}")
+            self.logger.info(f"stderr : {result.stderr}")
             status = (result.returncode == 0)
             self.logger.info("Command executed successfully")
         except Exception as e:
