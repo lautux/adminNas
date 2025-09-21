@@ -43,8 +43,8 @@ class Rclone:
                 stderr=subprocess.PIPE,
                 text=True
             )
-            self.logger.info(f"stdout : {result.stdout}")
-            self.logger.info(f"stderr : {result.stderr}")
+            #self.logger.info(f"stdout : {result.stdout}")
+            #self.logger.info(f"stderr : {result.stderr}")
             status = (result.returncode == 0)
             self.logger.info("Command executed successfully")
         except Exception as e:
