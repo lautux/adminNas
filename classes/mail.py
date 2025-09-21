@@ -2,6 +2,7 @@
 
 import smtplib
 import config
+from classes.logger import Logger
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.utils import formatdate
@@ -10,9 +11,9 @@ class Mail:
     """
     Class to send mail
     """
-    logger       = None
+    logger = None
 
-    def __init__(self, logger=None):
+    def __init__(self, logger:Logger=None):
         """
         Constructor
 
