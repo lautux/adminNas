@@ -10,5 +10,3 @@ rclone = Rclone(log)
 print("rsync.sendPhotos() - DEBUT")
 rclone.sendPhotos()
 print("rsync.sendPhotos() - FIN")
-
-

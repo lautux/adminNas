@@ -7,8 +7,6 @@ from classes.rclone import Rclone
 
 log = Logger(f"{config.LOG_FILE_PATH}", logging.DEBUG)
 rclone = Rclone(log)
-print("rsync.sendPhotos() - DEBUT")
-rclone.sendPhotos()
-print("rsync.sendPhotos() - FIN")
-
-
+print("rsync.sendData() - DEBUT")
+rclone.sendData()
+print("rsync.sendData() - FIN")
