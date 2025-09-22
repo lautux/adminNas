@@ -11,6 +11,7 @@ from classes.smart import Smart
 from classes.fail2ban import Fail2ban
 from classes.cpu import Cpu
 
+#log = Logger(f"{config.LOG_FILE_PATH}", config.LOGGING_MODE)
 log = Logger(f"{config.LOG_FILE_PATH}", logging.DEBUG)
 
 print(f"{'-'*40}")

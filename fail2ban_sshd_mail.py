@@ -28,7 +28,7 @@ to_addr = "lautux76@gmail.com"
 subject = "NAS - Fail2ban"
 body = f"Tentative de connexion au NAS !\n\n\tDate : {fail2ban_matches}\n\tIP : {fail2ban_ip}\n\tNb de tentatives : {fail2ban_failues}"
 
-log = Logger(f"{config.LOG_FILE_PATH}", logging.DEBUG)
+log = Logger(f"{config.LOG_FILE_PATH}", config.LOGGING_MODE)
 mail = Mail(log)
 print("mail.send() - DEBUT")
 mail.send(to_addr, subject, body)
