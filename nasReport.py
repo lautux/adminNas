@@ -12,7 +12,7 @@ from classes.fail2ban import Fail2ban
 from classes.cpu import Cpu
 
 #log = Logger(f"{config.LOG_FILE_PATH}", config.LOGGING_MODE)
-log = Logger(f"{config.LOG_FILE_PATH}", logging.DEBUG)
+log = Logger(f"{config.LOG_FILE_PATH}", logging.WARNING)
 
 print(f"{'-'*40}")
 print(f"{'Status du NAS': ^{40}}")
