@@ -37,7 +37,7 @@ smart_globalStatus = smart.getGlobalStatus()
 print(f"\n # Santé des disques : {'OK' if smart_globalStatus else 'KO'}")
 smart_globalStatus = False
 if not smart_globalStatus:
-    print(smart.getGlobalDetails(badOnly=False))
+    print(smart.getGlobalDetails())
 
 
 ###############################################################################
