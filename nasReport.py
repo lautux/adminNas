@@ -27,7 +27,7 @@ raid_globalStatus = raid.getGlobalStatus()
 print(f"\n # Etat des RAID : {'OK' if raid_globalStatus else 'KO'}")
 raid_globalStatus = False
 if not raid_globalStatus:
-    print(raid.getGlobalDetails(badOnly=False))
+    print(raid.getGlobalDetails())
 
 
 ###############################################################################
