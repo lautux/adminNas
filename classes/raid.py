@@ -58,7 +58,7 @@ class Raid:
                     details += f"\t{' '.join(self.__getCheckCommand(dev))}\n"
                     details += f"\t{self.getRaidDetail(dev)}\n"
         except Exception as e:
-            status = False
+            details = False
             self.logger.error(f"Exception occured : {traceback.format_exc()}")
         finally:
             return details
@@ -67,15 +67,8 @@ class Raid:
         try:
             self.logger.debug(f"Raid.getRaidStatus")
             status = False
-            cmd = self.__getCheckCommand(device)
-            result = subprocess.run(
-                cmd,
-                capture_output=True,
-                text=True,
-                check=True
-            )
-            raidDetail = result.stdout
-            for line in raidDetail.splitlines():
+            state = None
+            for line in self.getRaidDetail(device).splitlines():
                 if "State :" in line:
                     state = line.split(":")[1].strip()
             status = (state == "clean")
@@ -89,8 +82,7 @@ class Raid:
         try:
             self.logger.debug(f"Raid.getRaidDetail")
             raidDetail = ""
-            cmd = self.checkCommand.copy()
-            cmd.append(device)
+            cmd = self.__getCheckCommand(device)
             self.logger.debug(f"cmd : {cmd}")
             result = subprocess.run(
                 cmd,

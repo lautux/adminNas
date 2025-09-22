@@ -32,11 +32,12 @@ if not raid_globalStatus:
 ###############################################################################
 # SMART health
 ###############################################################################
-"""smart = Smart(config.HDD_PATHS, log)
+smart = Smart(config.HDD_PATHS, log)
 smart_globalStatus = smart.getGlobalStatus()
 print(f"\n # Santé des disques : {'OK' if smart_globalStatus else 'KO'}")
+smart_globalStatus = False
 if not smart_globalStatus:
-    print(f"\t/!\\ Vérifier l'état de santé du disque : {' '.join(smart.checkCommand)}")"""
+    smart.getGlobalDetails(badOnly=False)
 
 
 ###############################################################################

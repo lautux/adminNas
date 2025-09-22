@@ -22,6 +22,17 @@ class Smart:
         self.logger = logger
         self.checkCommand = ["sudo", "smartctl", "-H"]
 
+    def __getCheckCommand(self, device:str) -> str:
+        try:
+            self.logger.debug(f"Smart.__getCheckCommand")
+            tabCmd = self.checkCommand.copy()
+            tabCmd.append(device)
+        except Exception as e:
+            tabCmd = []
+            self.logger.error(f"Exception occured : {traceback.format_exc()}")
+        finally:
+            return tabCmd
+
     def getGlobalStatus(self) -> bool:
         try:
             self.logger.debug(f"Smart.getGlobalStatus - DEBUT")
@@ -36,6 +47,21 @@ class Smart:
         finally:
             self.logger.debug(f"Smart.getGlobalStatus - FIN")
             return status
+
+    def getGlobalDetails(self, badOnly:bool=True) -> bool:
+        try:
+            self.logger.debug(f"Smart.getGlobalDetail")
+            details = ""
+            for dev in self.raidDevices:
+                details += f"Smart status of {dev} : {"OK" if self.getSmartStatus(dev) else "KO"}\n"
+                if (not badOnly) or (not self.getSmartStatus(dev)):
+                    details += f"\t{' '.join(self.__getCheckCommand(dev))}\n"
+                    details += f"\t{self.getSmartDetail(dev)}\n"
+        except Exception as e:
+            details = False
+            self.logger.error(f"Exception occured : {traceback.format_exc()}")
+        finally:
+            return details
 
     def getSmartStatus(self, device) -> bool:
         try:
@@ -58,9 +84,8 @@ class Smart:
         try:
             self.logger.debug(f"Smart.getSmartDetail - DEBUT")
             smartDetail = None
-            cmd = self.checkCommand.copy()
-            cmd.append(device)
-            self.logger.debug(f"Smart.getSmartDetail - cmd : {cmd}")
+            cmd = self.__getCheckCommand(device)
+            self.logger.debug(f"cmd : {cmd}")
             result = subprocess.run(
                 cmd,
                 capture_output=True,
