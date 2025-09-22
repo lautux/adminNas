@@ -52,7 +52,7 @@ class Smart:
         try:
             self.logger.debug(f"Smart.getGlobalDetail")
             details = ""
-            for dev in self.raidDevices:
+            for dev in self.smartDevices:
                 details += f"Smart status of {dev} : {"OK" if self.getSmartStatus(dev) else "KO"}\n"
                 if (not badOnly) or (not self.getSmartStatus(dev)):
                     details += f"\t{' '.join(self.__getCheckCommand(dev))}\n"
