@@ -1,6 +1,7 @@
 #! /usr/bin/python3
 
 import subprocess
+import traceback
 
 class Smart:
     """
@@ -31,7 +32,7 @@ class Smart:
                     break
         except Exception as e:
             status = False
-            self.logger.error(f"Error in getGlobalStatus : {e.stderr}")
+            self.logger.error(f"Exception occured : {traceback.format_exc()}")
         finally:
             self.logger.debug(f"Smart.getGlobalStatus - FIN")
             return status
@@ -48,7 +49,7 @@ class Smart:
             status = (state == "PASSED")
         except Exception as e:
             status = False
-            self.logger.error(f"Error in getSmartStatus : {e.stderr}")
+            self.logger.error(f"Exception occured : {traceback.format_exc()}")
         finally:
             self.logger.debug(f"Smart.getSmartStatus - FIN")
             return status
@@ -70,7 +71,7 @@ class Smart:
             self.logger.debug(f"smartDetail : {smartDetail}")
         except Exception as e:
             smartDetail = None
-            self.logger.error(f"Error in getSmartDetail : {e}")
+            self.logger.error(f"Exception occured : {traceback.format_exc()}")
         finally:
             self.logger.debug(f"Smart.getSmartDetail - FIN")
             return smartDetail

@@ -2,6 +2,7 @@
 
 import smtplib
 import config
+import traceback
 from classes.logger import Logger
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -46,6 +47,6 @@ class Mail:
             server.quit()
             status = True
         except Exception as e:
-            self.logger.error(f"Error in Mail.send : {e.stderr}")
+            self.logger.error(f"Exception occured : {traceback.format_exc()}")
         finally:
               return status

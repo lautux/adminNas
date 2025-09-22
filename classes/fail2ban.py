@@ -1,6 +1,7 @@
 #! /usr/bin/python3
 
 import subprocess
+import traceback
 
 class Fail2ban:
     """
@@ -26,7 +27,7 @@ class Fail2ban:
             status = self.getFail2banStatus()
         except Exception as e:
             status = False
-            self.logger.error(f"Error in getGlobalStatus : {e.stderr}")
+            self.logger.error(f"Exception occured : {traceback.format_exc()}")
         finally:
             return status
     
@@ -48,7 +49,7 @@ class Fail2ban:
             status = (state == "active")
         except Exception as e:
             status = False
-            self.logger.error(f"Error in getFail2banStatus : {e.stderr}")
+            self.logger.error(f"Exception occured : {traceback.format_exc()}")
         finally:
             return status
 
@@ -67,7 +68,7 @@ class Fail2ban:
                     ips = line.split(":")[1].strip()
         except Exception as e:
             ips = ""
-            self.logger.error(f"Error in getBannedIp : {e.stderr}")
+            self.logger.error(f"Exception occured : {traceback.format_exc()}")
         finally:
             return ips
 

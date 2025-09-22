@@ -2,6 +2,7 @@
 
 import subprocess
 import psutil
+import traceback
 
 class Cpu:
     """
@@ -27,7 +28,7 @@ class Cpu:
             status = (cpu <= 80)
         except Exception as e:
             status = False
-            self.logger.error(f"Error in getGlobalStatus : {e.stderr}")
+            self.logger.error(f"Exception occured : {traceback.format_exc()}")
         finally:
             return status
 
@@ -37,7 +38,7 @@ class Cpu:
             cpu = psutil.cpu_percent(interval=0.2)
         except Exception as e:
             cpu = None
-            self.logger.error(f"Error in getCpuPercent : {e.stderr}")
+            self.logger.error(f"Exception occured : {traceback.format_exc()}")
         finally:
             return cpu
 
@@ -53,6 +54,6 @@ class Cpu:
             cpuDetail = result.stdout
         except Exception as e:
             cpuDetail = None
-            self.logger.error(f"Error in getCpuDetail : {e.stderr}")
+            self.logger.error(f"Exception occured : {traceback.format_exc()}")
         finally:
             return cpuDetail

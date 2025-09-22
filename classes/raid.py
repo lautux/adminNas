@@ -1,6 +1,7 @@
 #! /usr/bin/python3
 
 import subprocess
+import traceback
 
 class Raid:
     """
@@ -22,6 +23,17 @@ class Raid:
         self.checkCommand = ["sudo", "mdadm", "--detail"]
         self.logger.debug(f"Raid.__init__")
 
+    def __getCheckCommand(self, device:str) -> str:
+        try:
+            self.logger.debug(f"Raid.__getCheckCommand")
+            tabCmd = self.checkCommand.copy()
+            tabCmd.append(device)
+        except Exception as e:
+            tabCmd = []
+            self.logger.error(f"Exception occured : {traceback.format_exc()}")
+        finally:
+            return tabCmd
+
     def getGlobalStatus(self) -> bool:
         try:
             self.logger.debug(f"Raid.getGlobalStatus")
@@ -32,16 +44,32 @@ class Raid:
                     break
         except Exception as e:
             status = False
-            self.logger.error(f"Error in getGlobalStatus : {e.stderr}")
+            self.logger.error(f"Exception occured : {traceback.format_exc()}")
         finally:
             return status
+    
+    def getGlobalDetails(self, badOnly:bool=True) -> bool:
+        try:
+            self.logger.debug(f"Raid.getGlobalDetail")
+            details = ""
+            for dev in self.raidDevices:
+                if self.getRaidStatus(dev):
+                    details += f"Raid array {dev} : OK\n"
+                else:
+                    details += f"Raid array {dev} : KO\n"
+                    details += f"\t{' '.join(self.__getCheckCommand(dev))}\n"
+                    details += f"\t{self.getRaidDetail(dev)}\n"
+        except Exception as e:
+            status = False
+            self.logger.error(f"Exception occured : {traceback.format_exc()}")
+        finally:
+            return details
 
-    def getRaidStatus(self, device) -> bool:
+    def getRaidStatus(self, device:str) -> bool:
         try:
             self.logger.debug(f"Raid.getRaidStatus")
             status = False
-            cmd = self.checkCommand.copy()
-            cmd.append(device)
+            cmd = self.__getCheckCommand(device)
             result = subprocess.run(
                 cmd,
                 capture_output=True,
@@ -55,11 +83,11 @@ class Raid:
             status = (state == "clean")
         except Exception as e:
             status = False
-            self.logger.error(f"Error in getRaidStatus : {e.stderr}")
+            self.logger.error(f"Exception occured : {traceback.format_exc()}")
         finally:
             return status
 
-    def getRaidDetail(self, device) -> str:
+    def getRaidDetail(self, device:str) -> str:
         try:
             self.logger.debug(f"Raid.getRaidDetail")
             raidDetail = ""
@@ -75,7 +103,7 @@ class Raid:
             raidDetail = result.stdout
         except Exception as e:
             raidDetail = ""
-            self.logger.error(f"Error in getRaidDetail : {e.stderr}")
+            self.logger.error(f"Exception occured : {traceback.format_exc()}")
         finally:
             return raidDetail
 
