@@ -2,7 +2,7 @@ import logging
 LOGGING_MODE = logging.WARNING
 LOG_FILE_PATH = "/tmp/check_nas.log"
 RAID_PATHS = ["/dev/md0",]
-HDD_PATHS = ["/dev/sda", "/dev/sdb", "/dev/sdc"]
+HDD_PATHS = ["/dev/nvme0n1", "/dev/sda", "/dev/sdb", "/dev/sdc"]
 MAIL_SMTP = "smtp.free.fr"
 MAIL_PORT = 587  # Port pour TLS
 MAIL_USER = "merlet.l@free.fr"
