@@ -31,6 +31,22 @@ class Fail2ban:
         finally:
             return status
     
+    def getGlobalDetails(self) -> bool:
+        try:
+            details = ""
+            result = subprocess.run(
+                self.bannedIpCommand,
+                capture_output=True,
+                text=True,
+                check=True
+            )
+            details = result.stdout
+        except Exception as e:
+            details = False
+            self.logger.error(f"Exception occured : {traceback.format_exc()}")
+        finally:
+            return details
+
     def getFail2banStatus(self) -> bool:
         try:
             status = False

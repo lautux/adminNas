@@ -42,11 +42,12 @@ if not smart_globalStatus:
 ###############################################################################
 # Fail2ban service status
 ###############################################################################
-"""fail2ban = Fail2ban(log)
+fail2ban = Fail2ban(log)
 fail2ban_globalStatus = fail2ban.getGlobalStatus()
 print(f"\n # Status de Fail2ban : {'OK' if fail2ban_globalStatus else 'KO'}")
+print(f"Banned IP : {fail2ban.getBannedIp()}")
 if not fail2ban_globalStatus:
-    print(f"\t/!\\ Vérifier l'état du service fail2ban : {' '.join(fail2ban.checkCommand)}")"""
+    print(fail2ban.getGlobalDetails())
 
 
 ###############################################################################
