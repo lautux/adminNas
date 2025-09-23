@@ -44,10 +44,12 @@ if not smart_globalStatus:
 ###############################################################################
 fail2ban = Fail2ban(log)
 fail2ban_globalStatus = fail2ban.getGlobalStatus()
+fail2ban_ip = fail2ban.getBannedIp()
 print(f"\n # Status de Fail2ban : {'OK' if fail2ban_globalStatus else 'KO'}")
-print(f"Banned IP : {fail2ban.getBannedIp()}")
 if not fail2ban_globalStatus:
     print(fail2ban.getGlobalDetails())
+if fail2ban_ip != "":
+    print(f"Banned IP : {fail2ban_ip}")
 
 
 ###############################################################################
