@@ -5,14 +5,18 @@
 ###############################################################################
 import logging
 import config
+import sys
 from classes.logger import Logger
 from classes.raid import Raid
 from classes.smart import Smart
 from classes.fail2ban import Fail2ban
 from classes.cpu import Cpu
+from classes.param import Param
 
 #log = Logger(f"{config.LOG_FILE_PATH}", config.LOGGING_MODE)
 log = Logger(f"{config.LOG_FILE_PATH}", logging.WARNING)
+
+print(sys.argv)
 
 print(f"{'-'*40}")
 print(f"{'Status du NAS': ^{40}}")
