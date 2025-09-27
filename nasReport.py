@@ -23,8 +23,9 @@ def main():
     if(args.verbose):
         loggingMode = logging.DEBUG
         print(f"Activate DEBUG mode : {loggingMode}")
-        print(f"Log file : {log.logFilePath}")
     log = Logger(f"{config.LOG_FILE_PATH}", loggingMode)
+    if(args.verbose):
+        print(f"Log file : {log.logFilePath}")
 
     ###############################################################################
     # Report header
