@@ -22,7 +22,9 @@ def main():
     loggingMode = config.LOGGING_MODE
     if(args.verbose):
         loggingMode = logging.DEBUG
-        print(f"Activate DEBUG mode : {loggingMode}")
+        print(f"Activate verbose debug mode : {loggingMode}")
+    else:
+        print(f"Standard debug mode : {loggingMode}")
     log = Logger(f"{config.LOG_FILE_PATH}", loggingMode)
     if(args.verbose):
         print(f"Log file : {log.logFilePath}")
