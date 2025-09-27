@@ -14,7 +14,7 @@ def exec(tabCmd):
     resultat = subprocess.run(tabCmd, capture_output=True, text=True)
     print(resultat.stdout)
     if not resultat.stderr:
-        print(f"error :\n{resultat.stderr}")
+        print(f"error :\n*{resultat.stderr}*")
 
 exec(["python3", "nasReport.py"])
 exec(["python3", "nasReport.py", "-d"])

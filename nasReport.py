@@ -19,7 +19,11 @@ def main():
     parser.add_argument("-v", "--verbose", action="store_true", help="Verbose mode")
     parser.add_argument("-d", "--details", action="store_true", help="Show more details")
     args = parser.parse_args()
-    log = Logger(f"{config.LOG_FILE_PATH}", logging.DEBUG if args.verbose else config.LOGGING_MODE)
+    loggingMode = config.LOGGING_MODE
+    if(args.verbose):
+        loggingMode = logging.DEBUG
+        print(f"Activate DEBUG mode : {loggingMode}")
+    log = Logger(f"{config.LOG_FILE_PATH}", loggingMode)
 
     ###############################################################################
     # Report header
