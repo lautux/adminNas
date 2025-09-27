@@ -15,6 +15,7 @@ class Logger:
         """
         self.logger = logging.getLogger(__name__)
         self.logger.setLevel(niveau)
+        self.logFilePath = nom_fichier
 
         # Formatteur pour les messages de log
         formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')

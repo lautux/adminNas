@@ -23,6 +23,7 @@ def main():
     if(args.verbose):
         loggingMode = logging.DEBUG
         print(f"Activate DEBUG mode : {loggingMode}")
+        print(f"Log file : {log.logFilePath}")
     log = Logger(f"{config.LOG_FILE_PATH}", loggingMode)
 
     ###############################################################################
@@ -75,6 +76,8 @@ def main():
     #cpu_globalStatus = False
     if not cpu_globalStatus:
         print(f"\t/!\\ Vérifier l'utilisation du CPU : {' '.join(cpu.checkCommand)}")"""
+    
+    
 
 if __name__ == "__main__":
     main()
