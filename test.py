@@ -9,13 +9,8 @@ from classes.mail import Mail
 
 log = Logger(f"{config.LOG_FILE_PATH}", config.LOGGING_MODE)
 
-resultat = subprocess.run(
-    ["python3", "nasReport.py", "-d"],
-    capture_output=True,
-    text=True
-)
-print("Sortie :", resultat.stdout)
-print("Erreur :", resultat.stderr)
+resultat = subprocess.run(["python3", "nasReport.py", "-d"], capture_output=True, text=True)
+print(f"{resultat.stdout}{"error :"+resultat.stderr if not resultat.stderr else ""}")
 
 """mail = Mail(log)
 print("mail.send() - DEBUT")
