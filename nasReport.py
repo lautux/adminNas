@@ -72,3 +72,5 @@ def main():
     if not cpu_globalStatus:
         print(f"\t/!\\ Vérifier l'utilisation du CPU : {' '.join(cpu.checkCommand)}")"""
 
+if __name__ == "__main__":
+    main()
