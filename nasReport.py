@@ -28,6 +28,11 @@ def main():
     log = Logger(f"{config.LOG_FILE_PATH}", loggingMode)
     if(args.verbose):
         print(f"Log file : {log.logFilePath}")
+    log.debug(f"{'#'*20} DEBUG {'#'*20}")
+    log.info(f"{'#'*20} INFO {'#'*20}")
+    log.warning(f"{'#'*20} WARNING {'#'*20}")
+    log.error(f"{'#'*20} ERROR {'#'*20}")
+    log.critical(f"{'#'*20} CRITICAL {'#'*20}")
 
     ###############################################################################
     # Report header
