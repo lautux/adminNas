@@ -10,7 +10,7 @@ from classes.mail import Mail
 log = Logger(f"{config.LOG_FILE_PATH}", config.LOGGING_MODE)
 
 resultat = subprocess.run(
-    ["python", "nasReport.py", "arg1", "arg2"],
+    ["python3", "nasReport.py", "arg1", "arg2"],
     capture_output=True,
     text=True
 )
