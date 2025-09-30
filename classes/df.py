@@ -74,7 +74,7 @@ class Df:
             for line in self.getDfDetail(mnt).splitlines():
                 # Vérifier si le % d'utilisation est > au seuil
                 self.logger.debug(f"line : {line}")
-                if re.match(r'\s+' + mnt + r'$', line):
+                if re.match(r'^.*\s+' + mnt + r'$', line):
                     self.logger.debug(f"line match :-)")
                     percent = line.split()[4].rstrip('%')
                 else:
