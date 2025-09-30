@@ -76,7 +76,7 @@ class Df:
                 self.logger.debug(f"line : {line}")
                 if re.match(r'^.*\s+' + mnt + r'$', line):
                     self.logger.debug(f"line match :-)")
-                    percent = line.split()[4].rstrip('%')
+                    percent = int(line.split()[4].rstrip('%'))
                 else:
                     self.logger.debug(f"line not match :-(")
             self.logger.debug(f"percent : {percent}")
