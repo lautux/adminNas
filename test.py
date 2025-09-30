@@ -16,8 +16,8 @@ def exec(tabCmd):
     if resultat.stderr:
         print(f"error :\n*{resultat.stderr}*")
 
-exec(["python3", "nasReport.py"])
-#exec(["python3", "nasReport.py", "-d"])
+#exec(["python3", "nasReport.py"])
+exec(["python3", "nasReport.py", "-d"])
 #exec(["python3", "nasReport.py", "-d", "-v"])
 
 
