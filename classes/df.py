@@ -2,6 +2,8 @@
 
 import subprocess
 import traceback
+import config
+import re
 
 class Df:
     """
@@ -20,6 +22,7 @@ class Df:
         """
         self.mountPoints = mountPoints
         self.logger = logger
+        # df -x tmpfs -x devtmpfs -x efivarfs -k /mnt/raid4to | awk 'NR>1 {gsub("%", "", $5); print $5}'
         self.checkCommand = ["sudo", "df", "-h"]
 
     def __getCheckCommand(self, mountPoint:str) -> str:
@@ -70,10 +73,10 @@ class Df:
             state = None
             for line in self.getDfDetail(mnt).splitlines():
                 # Vérifier si le % d'utilisation est > au seuil
-                if "test result:" in line:
-                    state = line.split(":")[1].strip()
-            self.logger.debug(f"state : {state}")
-            status = (state == "PASSED")
+                if re.match(r'^' + mnt + r'\s+', line):
+                    percent = line.split()[4].rstrip('%')
+            self.logger.debug(f"percent : {percent}")
+            status = (percent <= config.DF_THREATHOLD)
         except Exception as e:
             status = False
             self.logger.error(f"Exception occured : {traceback.format_exc()}")
