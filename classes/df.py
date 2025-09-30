@@ -70,7 +70,7 @@ class Df:
         try:
             self.logger.debug(f"Df.getDfStatus - DEBUT")
             status = False
-            state = None
+            percent = None
             for line in self.getDfDetail(mnt).splitlines():
                 # Vérifier si le % d'utilisation est > au seuil
                 if re.match(r'^' + mnt + r'\s+', line):
