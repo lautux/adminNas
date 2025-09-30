@@ -56,7 +56,7 @@ class Df:
             self.logger.debug(f"Df.getGlobalDetail")
             details = ""
             for mnt in self.mountPoints:
-                details += f"Df status of {mnt} : {"OK" if self.getDfStatus(mnt) else "KO"}\n"
+                details += f"Df status of {mnt} : {"OK" if self.getDfStatus(mnt) else "KO"} ({self.getDfPercent(mnt)}%)\n"
                 if (not badOnly) or (not self.getDfStatus(mnt)):
                     details += f"\t{' '.join(self.__getCheckCommand(mnt))}\n"
                     details += f"\t{self.getDfDetail(mnt)}\n"
@@ -69,24 +69,28 @@ class Df:
     def getDfStatus(self, mnt) -> bool:
         try:
             self.logger.debug(f"Df.getDfStatus - DEBUT")
-            status = False
-            percent = 100
-            for line in self.getDfDetail(mnt).splitlines():
-                # Vérifier si le % d'utilisation est > au seuil
-                self.logger.debug(f"line : {line}")
-                if re.match(r'^.*\s+' + mnt + r'$', line):
-                    self.logger.debug(f"line match :-)")
-                    percent = int(line.split()[4].rstrip('%'))
-                else:
-                    self.logger.debug(f"line not match :-(")
-            self.logger.debug(f"percent : {percent}")
+            percent = self.getDfPercent(mnt)
+            self.logger.debug(f"Df.getDfStatus - percent = {percent}")
             status = (percent <= config.DF_THREATHOLD)
+            self.logger.debug(f"Df.getDfStatus - status = {status}")
         except Exception as e:
             status = False
             self.logger.error(f"Exception occured : {traceback.format_exc()}")
         finally:
             self.logger.debug(f"Df.getDfStatus - FIN")
             return status
+
+    def getDfPercent(self, mnt) -> int:
+        try:
+            self.logger.debug(f"Df.getDfPercent - DEBUT")
+            percent = 100
+            for line in self.getDfDetail(mnt).splitlines()[1:]:
+                percent = int(line.split()[4].rstrip('%'))
+        except Exception as e:
+            self.logger.error(f"Exception occured : {traceback.format_exc()}")
+        finally:
+            self.logger.debug(f"Df.getDfPercent - FIN")
+            return percent
 
     def getDfDetail(self, mnt) -> str:
         try:
