@@ -70,11 +70,15 @@ class Df:
         try:
             self.logger.debug(f"Df.getDfStatus - DEBUT")
             status = False
-            percent = None
+            percent = 100
             for line in self.getDfDetail(mnt).splitlines():
                 # Vérifier si le % d'utilisation est > au seuil
+                self.logger.debug(f"line : {line}")
                 if re.match(r'^' + mnt + r'\s+', line):
+                    self.logger.debug(f"line match :-)")
                     percent = line.split()[4].rstrip('%')
+                else:
+                    self.logger.debug(f"line not match :-(")
             self.logger.debug(f"percent : {percent}")
             status = (percent <= config.DF_THREATHOLD)
         except Exception as e:
