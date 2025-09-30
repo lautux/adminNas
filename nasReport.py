@@ -79,7 +79,7 @@ def main():
     df_globalStatus = df.getGlobalStatus()
     print(f"\n # Occupation des disques : {'OK' if df_globalStatus else 'KO'}")
     if not df_globalStatus or args.details:
-        print(df.getGlobalDetails())
+        print(df.getGlobalDetails(not args.details))
 
 
     ###############################################################################
