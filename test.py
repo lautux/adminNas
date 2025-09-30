@@ -17,7 +17,7 @@ def exec(tabCmd):
         print(f"error :\n*{resultat.stderr}*")
 
 #exec(["python3", "nasReport.py"])
-exec(["python3", "nasReport.py", "-d"])
+exec(["python3", "nasReport.py", "-d", "-v"])
 
 
 """mail = Mail(log)
