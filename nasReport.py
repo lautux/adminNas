@@ -13,12 +13,15 @@ from classes.smart import Smart
 from classes.fail2ban import Fail2ban
 from classes.df import Df
 from classes.cpu import Cpu
+from classes.mail import Mail
 
 
 def main():
+    result = ""
     parser = argparse.ArgumentParser(description="Script d'analyse du NAS")
     parser.add_argument("-v", "--verbose", action="store_true", help="Verbose mode")
     parser.add_argument("-d", "--details", action="store_true", help="Show more details")
+    parser.add_argument("-m", "--mailto", type=str, default=config.MAIL_DEFAULT_RECIPIENT, help="Send result by mail to ...")
     args = parser.parse_args()
     loggingMode = config.LOGGING_MODE
     if(args.verbose):
@@ -28,14 +31,17 @@ def main():
     log = Logger(f"{config.LOG_FILE_PATH}", loggingMode)
     if(args.verbose):
         print(f"Log file : {log.logFilePath}")
+        if(args.mail is not None):
+            print(f"Send results to : {args.mail}")
+    
 
 
     ###############################################################################
     # Report header
     ###############################################################################
-    print(f"{'-'*40}")
-    print(f"{'Status du NAS': ^{40}}")
-    print(f"{'-'*40}")
+    result = f"{'-'*40}"
+    result = f"{'Status du NAS': ^{40}}"
+    result = f"{'-'*40}"
 
 
     ###############################################################################
@@ -43,9 +49,9 @@ def main():
     ###############################################################################
     raid = Raid(config.RAID_PATHS, log)
     raid_globalStatus = raid.getGlobalStatus()
-    print(f"# Etat des RAID : {'OK' if raid_globalStatus else 'KO'}")
+    result = f"# Etat des RAID : {'OK' if raid_globalStatus else 'KO'}"
     if not raid_globalStatus or args.details:
-        print(raid.getGlobalDetails())
+        result = raid.getGlobalDetails()
 
 
     ###############################################################################
@@ -53,9 +59,9 @@ def main():
     ###############################################################################
     smart = Smart(config.HDD_PATHS, log)
     smart_globalStatus = smart.getGlobalStatus()
-    print(f"# Santé des disques : {'OK' if smart_globalStatus else 'KO'}")
+    result = f"# Santé des disques : {'OK' if smart_globalStatus else 'KO'}"
     if not smart_globalStatus or args.details:
-        print(smart.getGlobalDetails())
+        result = smart.getGlobalDetails()
 
 
     ###############################################################################
@@ -64,11 +70,11 @@ def main():
     fail2ban = Fail2ban(log)
     fail2ban_globalStatus = fail2ban.getGlobalStatus()
     fail2ban_ip = fail2ban.getBannedIp()
-    print(f"# Status de Fail2ban : {'OK' if fail2ban_globalStatus else 'KO'}")
+    result = f"# Status de Fail2ban : {'OK' if fail2ban_globalStatus else 'KO'}"
     if not fail2ban_globalStatus or args.details:
-        print(fail2ban.getGlobalDetails())
+        result = fail2ban.getGlobalDetails()
     if fail2ban_ip != "":
-        print(f"Banned IP : {fail2ban_ip}")
+        result = f"Banned IP : {fail2ban_ip}"
 
 
     ###############################################################################
@@ -76,10 +82,10 @@ def main():
     ###############################################################################
     df = Df(config.DF_PATHS, log)
     df_globalStatus = df.getGlobalStatus()
-    print(f"# Occupation des disques : {'OK' if df_globalStatus else 'KO'}")
+    result = f"# Occupation des disques : {'OK' if df_globalStatus else 'KO'}"
     if not df_globalStatus or args.details:
-        #print(df.getGlobalDetails(not args.details))
-        print(df.getGlobalDetails())
+        #result = df.getGlobalDetails(not args.details)
+        result = df.getGlobalDetails()
 
 
     ###############################################################################
@@ -92,7 +98,14 @@ def main():
     if not cpu_globalStatus:
         print(f"\t/!\\ Vérifier l'utilisation du CPU : {' '.join(cpu.checkCommand)}")"""
     
-    
+    print(result)
+    if(args.mail is not None):
+        to_addr = args.mail
+        subject = "NAS - Health report"
+        body = result
+        mail = Mail(log)
+        mail.send(to_addr, subject, body)
+
 
 if __name__ == "__main__":
     main()

@@ -9,6 +9,7 @@ MAIL_SMTP = "smtp.free.fr"
 MAIL_PORT = 587  # Port pour TLS
 MAIL_USER = "merlet.l@free.fr"
 MAIL_PASSWORD = "u6V!5XVxTjYFjx"
+MAIL_DEFAULT_RECIPIENT = "lautux76@gmail.com"
 NAS_PHOTOS_PATH = "/mnt/raid4to/Photos/"
 PCLOUD_PHOTOS_PATH = "/NAS/Photos/"
 NAS_DATA_PATH = "/mnt/raid4to/Data/"
