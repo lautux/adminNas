@@ -39,9 +39,9 @@ def main():
     ###############################################################################
     # Report header
     ###############################################################################
-    result += f"{'-'*40}"
-    result += f"{'Status du NAS': ^{40}}"
-    result += f"{'-'*40}"
+    result += f"{'-'*40}\n"
+    result += f"{'Status du NAS': ^{40}}\n"
+    result += f"{'-'*40}\n"
 
 
     ###############################################################################
@@ -49,9 +49,9 @@ def main():
     ###############################################################################
     raid = Raid(config.RAID_PATHS, log)
     raid_globalStatus = raid.getGlobalStatus()
-    result += f"# Etat des RAID : {'OK' if raid_globalStatus else 'KO'}"
+    result += f"# Etat des RAID : {'OK' if raid_globalStatus else 'KO'}\n"
     if not raid_globalStatus or args.details:
-        result += raid.getGlobalDetails()
+        result += f"{raid.getGlobalDetails()}\n"
 
 
     ###############################################################################
@@ -59,9 +59,9 @@ def main():
     ###############################################################################
     smart = Smart(config.HDD_PATHS, log)
     smart_globalStatus = smart.getGlobalStatus()
-    result += f"# Santé des disques : {'OK' if smart_globalStatus else 'KO'}"
+    result += f"# Santé des disques : {'OK' if smart_globalStatus else 'KO'}\n"
     if not smart_globalStatus or args.details:
-        result += smart.getGlobalDetails()
+        result += f"{smart.getGlobalDetails()}\n"
 
 
     ###############################################################################
@@ -70,11 +70,11 @@ def main():
     fail2ban = Fail2ban(log)
     fail2ban_globalStatus = fail2ban.getGlobalStatus()
     fail2ban_ip = fail2ban.getBannedIp()
-    result += f"# Status de Fail2ban : {'OK' if fail2ban_globalStatus else 'KO'}"
+    result += f"# Status de Fail2ban : {'OK' if fail2ban_globalStatus else 'KO'}\n"
     if not fail2ban_globalStatus or args.details:
-        result += fail2ban.getGlobalDetails()
+        result += f"{fail2ban.getGlobalDetails()}\n"
     if fail2ban_ip != "":
-        result += f"Banned IP : {fail2ban_ip}"
+        result += f"Banned IP : {fail2ban_ip}\n"
 
 
     ###############################################################################
@@ -82,10 +82,10 @@ def main():
     ###############################################################################
     df = Df(config.DF_PATHS, log)
     df_globalStatus = df.getGlobalStatus()
-    result += f"# Occupation des disques : {'OK' if df_globalStatus else 'KO'}"
+    result += f"# Occupation des disques : {'OK' if df_globalStatus else 'KO'}\n"
     if not df_globalStatus or args.details:
-        #result = df.getGlobalDetails(not args.details)
-        result += df.getGlobalDetails()
+        #result = f"{df.getGlobalDetails(not args.details)}\n"
+        result += f"{df.getGlobalDetails()}\n"
 
 
     ###############################################################################
