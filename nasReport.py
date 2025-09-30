@@ -75,7 +75,7 @@ def main():
     ###############################################################################
     # DF status
     ###############################################################################
-    df = Df(log)
+    df = Df(config.DF_PATHS, log)
     df_globalStatus = df.getGlobalStatus()
     print(f"\n # Occupation des disques : {'OK' if df_globalStatus else 'KO'}")
     if not df_globalStatus or args.details:
