@@ -43,7 +43,7 @@ def main():
     ###############################################################################
     raid = Raid(config.RAID_PATHS, log)
     raid_globalStatus = raid.getGlobalStatus()
-    print(f"\n # Etat des RAID : {'OK' if raid_globalStatus else 'KO'}")
+    print(f"# Etat des RAID : {'OK' if raid_globalStatus else 'KO'}")
     if not raid_globalStatus or args.details:
         print(raid.getGlobalDetails())
 
@@ -53,7 +53,7 @@ def main():
     ###############################################################################
     smart = Smart(config.HDD_PATHS, log)
     smart_globalStatus = smart.getGlobalStatus()
-    print(f"\n # Santé des disques : {'OK' if smart_globalStatus else 'KO'}")
+    print(f"# Santé des disques : {'OK' if smart_globalStatus else 'KO'}")
     if not smart_globalStatus or args.details:
         print(smart.getGlobalDetails())
 
@@ -64,7 +64,7 @@ def main():
     fail2ban = Fail2ban(log)
     fail2ban_globalStatus = fail2ban.getGlobalStatus()
     fail2ban_ip = fail2ban.getBannedIp()
-    print(f"\n # Status de Fail2ban : {'OK' if fail2ban_globalStatus else 'KO'}")
+    print(f"# Status de Fail2ban : {'OK' if fail2ban_globalStatus else 'KO'}")
     if not fail2ban_globalStatus or args.details:
         print(fail2ban.getGlobalDetails())
     if fail2ban_ip != "":
@@ -76,7 +76,7 @@ def main():
     ###############################################################################
     df = Df(config.DF_PATHS, log)
     df_globalStatus = df.getGlobalStatus()
-    print(f"\n # Occupation des disques : {'OK' if df_globalStatus else 'KO'}")
+    print(f"# Occupation des disques : {'OK' if df_globalStatus else 'KO'}")
     if not df_globalStatus or args.details:
         #print(df.getGlobalDetails(not args.details))
         print(df.getGlobalDetails())
