@@ -24,7 +24,7 @@ class Df:
 
     def __getCheckCommand(self, mountPoint:str) -> str:
         try:
-            self.logger.debug(f"Smart.__getCheckCommand")
+            self.logger.debug(f"Df.__getCheckCommand")
             tabCmd = self.checkCommand.copy()
             tabCmd.append(mountPoint)
         except Exception as e:
@@ -35,7 +35,7 @@ class Df:
 
     def getGlobalStatus(self) -> bool:
         try:
-            self.logger.debug(f"Smart.getGlobalStatus - DEBUT")
+            self.logger.debug(f"Df.getGlobalStatus - DEBUT")
             status = True
             for mnt in self.mountPoints:
                 if not self.getDfStatus(mnt):
@@ -45,15 +45,15 @@ class Df:
             status = False
             self.logger.error(f"Exception occured : {traceback.format_exc()}")
         finally:
-            self.logger.debug(f"Smart.getGlobalStatus - FIN")
+            self.logger.debug(f"Df.getGlobalStatus - FIN")
             return status
 
     def getGlobalDetails(self, badOnly:bool=True) -> bool:
         try:
-            self.logger.debug(f"Smart.getGlobalDetail")
+            self.logger.debug(f"Df.getGlobalDetail")
             details = ""
             for mnt in self.mountPoints:
-                details += f"Smart status of {mnt} : {"OK" if self.getSmartStatus(mnt) else "KO"}\n"
+                details += f"Df status of {mnt} : {"OK" if self.getDfStatus(mnt) else "KO"}\n"
                 if (not badOnly) or (not self.getDfStatus(mnt)):
                     details += f"\t{' '.join(self.__getCheckCommand(mnt))}\n"
                     details += f"\t{self.getDfDetail(mnt)}\n"
@@ -65,7 +65,7 @@ class Df:
 
     def getDfStatus(self, mnt) -> bool:
         try:
-            self.logger.debug(f"Smart.getDfStatus - DEBUT")
+            self.logger.debug(f"Df.getDfStatus - DEBUT")
             status = False
             state = None
             for line in self.getDfDetail(mnt).splitlines():
@@ -78,12 +78,12 @@ class Df:
             status = False
             self.logger.error(f"Exception occured : {traceback.format_exc()}")
         finally:
-            self.logger.debug(f"Smart.getDfStatus - FIN")
+            self.logger.debug(f"Df.getDfStatus - FIN")
             return status
 
     def getDfDetail(self, mnt) -> str:
         try:
-            self.logger.debug(f"Smart.getDfDetail - DEBUT")
+            self.logger.debug(f"Df.getDfDetail - DEBUT")
             dfDetail = None
             cmd = self.__getCheckCommand(mnt)
             self.logger.debug(f"cmd : {cmd}")
@@ -99,6 +99,6 @@ class Df:
             dfDetail = None
             self.logger.error(f"Exception occured : {traceback.format_exc()}")
         finally:
-            self.logger.debug(f"Smart.getDfDetail - FIN")
+            self.logger.debug(f"Df.getDfDetail - FIN")
             return dfDetail
 

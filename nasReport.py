@@ -11,6 +11,7 @@ from classes.logger import Logger
 from classes.raid import Raid
 from classes.smart import Smart
 from classes.fail2ban import Fail2ban
+from classes.df import Df
 from classes.cpu import Cpu
 
 
@@ -69,6 +70,16 @@ def main():
         print(fail2ban.getGlobalDetails())
     if fail2ban_ip != "":
         print(f"Banned IP : {fail2ban_ip}")
+
+
+    ###############################################################################
+    # DF status
+    ###############################################################################
+    df = Df(log)
+    df_globalStatus = df.getGlobalStatus()
+    print(f"\n # Occupation des disques : {'OK' if df_globalStatus else 'KO'}")
+    if not df_globalStatus or args.details:
+        print(df.getGlobalDetails())
 
 
     ###############################################################################
