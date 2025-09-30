@@ -31,8 +31,8 @@ def main():
     log = Logger(f"{config.LOG_FILE_PATH}", loggingMode)
     if(args.verbose):
         print(f"Log file : {log.logFilePath}")
-        if(args.mail is not None):
-            print(f"Send results to : {args.mail}")
+        if(args.mailto is not None):
+            print(f"Send results to : {args.mailto}")
     
 
 
@@ -99,8 +99,8 @@ def main():
         print(f"\t/!\\ Vérifier l'utilisation du CPU : {' '.join(cpu.checkCommand)}")"""
     
     print(result)
-    if(args.mail is not None):
-        to_addr = args.mail
+    if(args.mailto is not None):
+        to_addr = args.mailto
         subject = "NAS - Health report"
         body = result
         mail = Mail(log)
