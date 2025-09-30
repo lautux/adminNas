@@ -18,7 +18,7 @@ def exec(tabCmd):
 
 #exec(["python3", "nasReport.py"])
 #exec(["python3", "nasReport.py", "-d"])
-exec(["python3", "nasReport.py", "-m"])
+exec(["python3", "nasReport.py", "-m", "lautux76@gmail.com"])
 #exec(["python3", "nasReport.py", "-d", "-v"])
 
 
