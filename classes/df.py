@@ -3,7 +3,6 @@
 import subprocess
 import traceback
 import config
-import re
 
 class Df:
     """
