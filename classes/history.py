@@ -34,9 +34,9 @@ class History:
 
             # 1. Get data from file
             dataDir = Path(dataPath)
-            dataFiles = list(dataDir.glob("df_*.txt"))
-            #df = pd.concat([pd.read_csv(f, sep=r'\s+', header=None, names=['timestamp', 'total', 'used', 'free', 'percent', 'partition']) for f in dataFiles], ignore_index=True)
-            df = pd.read_csv("C:\LAME\Perso\data.txt", sep=r'\s+', header=None, names=['timestamp', 'total', 'used', 'free', 'percent', 'partition'])
+            dataFiles = list(dataDir.glob(config.DF_HISTORY_FILE_FORMAT))
+            df = pd.concat([pd.read_csv(f, sep=r'\s+', header=None, names=['timestamp', 'total', 'used', 'free', 'percent', 'partition']) for f in dataFiles], ignore_index=True)
+            #df = pd.read_csv("C:/LAME/Perso/history/df_data2.txt", sep=r'\s+', header=None, names=['timestamp', 'total', 'used', 'free', 'percent', 'partition'])
             df['datetime'] = pd.to_datetime(df['timestamp'], format='%Y%m%d_%H%M%S')
             df['percent'] = df['percent'].str.rstrip('%').astype(float)
             
@@ -48,7 +48,7 @@ class History:
             #partitions = [p for p in partitions if p not in ['/boot/efi', ]] # Exclude some partitions
             for partition in partitions:
                 subset = df[df['partition'] == partition]
-                plt.plot(subset['datetime'], subset['percent'], label=f"{partition}", marker='o')
+                plt.plot(subset['datetime'], subset['percent'], label=f"{partition}", marker='')
             plt.axhline(y=config.DF_THREATHOLD, color='orange', linestyle='--', label='Seuil critique')
             plt.ylim(0, 100)
 
@@ -57,7 +57,9 @@ class History:
             plt.xlabel("Date")
             plt.ylabel("Espace utilisé (%)")
             plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
-            plt.gca().xaxis.set_major_locator(mdates.MinuteLocator(interval=5))
+            #plt.gca().xaxis.set_major_locator(mdates.MinuteLocator(interval=60))
+            plt.gca().xaxis.set_major_locator(mdates.AutoDateLocator())
+            plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%d/%m %H:%M'))
             plt.legend()
             plt.grid(True, linestyle='--', alpha=0.6)
             plt.tight_layout()
@@ -65,10 +67,9 @@ class History:
             # 3. Save picture
             plt.savefig(
                 outputFilePath,
-                dpi=300,                  # Résolution élevée (300 DPI)
-                bbox_inches='tight',      # Éviter les coupures
-                quality=95,               # Qualité maximale (pour les formats qui le supportent)
-                transparent=False         # Fond blanc (mettre True pour fond transparent)
+                dpi=300,
+                bbox_inches='tight',
+                transparent=False
             )
 
             # 4. Show chart
@@ -81,10 +82,3 @@ class History:
             self.logger.debug(f"Df.getDfGraph - FIN")
             return status
 
-"""
-# Créer un DataFrame Pandas
-df = pd.DataFrame(data)
-
-# Filtrer pour un point de montage spécifique (ex: "/data")
-df = df[df["mount_point"] == "/data"]
-"""

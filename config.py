@@ -7,6 +7,7 @@ HDD_PATHS = ["/dev/nvme0n1", "/dev/sda", "/dev/sdb", "/dev/sdc"]
 DF_PATHS = ["/", "/usr", "/tmp", "/var", "/boot/efi", "/data", "/mnt/raid4to"]
 DF_THREATHOLD = 80 # Statut KO si > 80%
 DF_HISTORY_PATH = "C:/LAME/Perso/history"
+DF_HISTORY_FILE_FORMAT = "df_*.log"
 DF_HISTORY_OUTPUT = "C:/temp/df_chart.png"
 MAIL_SMTP = "smtp.free.fr"
 MAIL_PORT = 587  # Port pour TLS
