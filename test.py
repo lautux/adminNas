@@ -6,7 +6,6 @@ import sys
 import subprocess
 from classes.logger import Logger
 from classes.mail import Mail
-from classes.history import History
 
 log = Logger(f"{config.LOG_FILE_PATH}", config.LOGGING_MODE)
 
@@ -19,8 +18,6 @@ def exec(tabCmd):
 
 #exec(["python3", "nasReport.py"])
 #exec(["python3", "nasReport.py", "-d"])
-#exec(["python3", "nasReport.py", "-m", "lautux76@gmail.com"])
+exec(["python3", "nasReport.py", "-m", "lautux76@gmail.com"])
 #exec(["python3", "nasReport.py", "-d", "-v"])
 
-dfHistory = History(log)
-dfHistory.getDfGraph(config.DF_HISTORY_PATH, config.DF_HISTORY_OUTPUT)

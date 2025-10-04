@@ -73,7 +73,7 @@ class History:
             )
 
             # 4. Show chart
-            plt.show()
+            #plt.show()
 
         except Exception as e:
             status = False

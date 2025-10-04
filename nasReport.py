@@ -14,6 +14,7 @@ from classes.fail2ban import Fail2ban
 from classes.df import Df
 from classes.cpu import Cpu
 from classes.mail import Mail
+from classes.history import History
 
 
 def main():
@@ -89,22 +90,25 @@ def main():
 
 
     ###############################################################################
-    # CPU status
+    # DF history
     ###############################################################################
-    """cpu = Cpu(log)
-    cpu_globalStatus = cpu.getGlobalStatus()
-    print(f"\n # Utilisation du CPU : {'OK' if cpu_globalStatus else 'KO'}")
-    #cpu_globalStatus = False
-    if not cpu_globalStatus:
-        print(f"\t/!\\ Vérifier l'utilisation du CPU : {' '.join(cpu.checkCommand)}")"""
+    dfHistory = History(log)
+    dfHistory.getDfGraph(config.DF_HISTORY_PATH, config.DF_HISTORY_OUTPUT)
     
     print(result)
     if(args.mailto is not None):
         to_addr = args.mailto
         subject = "NAS - Health report"
-        body = result
         mail = Mail(log)
-        mail.send(to_addr, subject, body)
+        bodyHTML = "<html><head><title>NAS Report</title></head>"
+        bodyHTML+= "<body>"
+        bodyHTML+= f"<pre>{result}</pre>"
+        bodyHTML+= "<img src=\"cid:df_history\" alt=\"DF history\" />"
+        bodyHTML+= "</body>"
+        images = {
+            "df_history": config.DF_HISTORY_OUTPUT,
+        }
+        mail.send(to_addr, subject, bodyHTML, images)
 
 
 if __name__ == "__main__":

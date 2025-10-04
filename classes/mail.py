@@ -3,9 +3,11 @@
 import smtplib
 import config
 import traceback
+import os
 from classes.logger import Logger
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.mime.image import MIMEImage
 from email.utils import formatdate
 
 class Mail:
@@ -24,22 +26,28 @@ class Mail:
         self.logger = logger
 
 
-    def send(self, mailTo:str, mailSubject:str, mailBody:str) -> bool:
+    def send(self, mailTo:str, mailSubject:str, mailBody:str, images:dict[str:str]=None) -> bool:
 
         # Avec le SMTP free.fr, on est obligé de mettre le même from que le compte utilisé pour s'authentifier sur le SMTP
         mailFrom = "merlet.l@free.fr"
         status = False
         
-        # Création du message
-        msg = MIMEMultipart()
-        msg['From'] = mailFrom
-        msg['To'] = mailTo
-        msg['Subject'] = mailSubject
-        msg['Date'] = formatdate(localtime=True)
-        msg.attach(MIMEText(mailBody, 'plain'))
-
         # Envoi de l'email
         try:
+            # Création du message
+            msg = MIMEMultipart()
+            msg['From'] = mailFrom
+            msg['To'] = mailTo
+            msg['Subject'] = mailSubject
+            msg['Date'] = formatdate(localtime=True)
+            if images:
+                for cid, path in images.items():
+                    if os.path.exists(path):
+                        with open(path, 'rb') as fp:
+                            img = MIMEImage(fp.read())
+                            img.add_header('Content-ID', f'<{cid}>')
+                            msg.attach(img)
+            msg.attach(MIMEText(mailBody, 'plain'))
             server = smtplib.SMTP(config.MAIL_SMTP, config.MAIL_PORT)
             server.starttls()  # Activer le mode TLS
             server.login(config.MAIL_USER, config.MAIL_PASSWORD)
