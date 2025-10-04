@@ -47,7 +47,7 @@ class Mail:
                             img = MIMEImage(fp.read())
                             img.add_header('Content-ID', f'<{cid}>')
                             msg.attach(img)
-            msg.attach(MIMEText(mailBody, 'plain'))
+            msg.attach(MIMEText(mailBody, 'html'))
             server = smtplib.SMTP(config.MAIL_SMTP, config.MAIL_PORT)
             server.starttls()  # Activer le mode TLS
             server.login(config.MAIL_USER, config.MAIL_PASSWORD)
