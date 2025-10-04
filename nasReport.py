@@ -19,6 +19,8 @@ from classes.history import History
 
 def main():
     result = ""
+    html = ""
+    css = ""
     parser = argparse.ArgumentParser(description="Script d'analyse du NAS")
     parser.add_argument("-v", "--verbose", action="store_true", help="Verbose mode")
     parser.add_argument("-d", "--details", action="store_true", help="Show more details")
@@ -43,6 +45,16 @@ def main():
     result += f"{'-'*40}\n"
     result += f"{'Status du NAS': ^{40}}\n"
     result += f"{'-'*40}\n"
+    css += """tdHeader{
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    height: 100px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding: 8px;
+    }"""
+    html += "<table><tr><td id=\"tdHeader\">NAS report</td></tr></table>"
 
 
     ###############################################################################
@@ -51,6 +63,7 @@ def main():
     raid = Raid(config.RAID_PATHS, log)
     raid_globalStatus = raid.getGlobalStatus()
     result += f"# Etat des RAID : {'OK' if raid_globalStatus else 'KO'}\n"
+    html += f"<div id=\"raidDevices\">Etat des RAID : {'OK' if raid_globalStatus else 'KO'}</div>"
     if not raid_globalStatus or args.details:
         result += f"{raid.getGlobalDetails()}\n"
 
@@ -61,6 +74,7 @@ def main():
     smart = Smart(config.HDD_PATHS, log)
     smart_globalStatus = smart.getGlobalStatus()
     result += f"# Santé des disques : {'OK' if smart_globalStatus else 'KO'}\n"
+    html += f"<div id=\"smartHealth\">Santé des disques : {'OK' if smart_globalStatus else 'KO'}</div>"
     if not smart_globalStatus or args.details:
         result += f"{smart.getGlobalDetails()}\n"
 
@@ -72,6 +86,7 @@ def main():
     fail2ban_globalStatus = fail2ban.getGlobalStatus()
     fail2ban_ip = fail2ban.getBannedIp()
     result += f"# Status de Fail2ban : {'OK' if fail2ban_globalStatus else 'KO'}\n"
+    html += f"<div id=\"fail2ban\">Status de Fail2ban : {'OK' if fail2ban_globalStatus else 'KO'}</div>"
     if not fail2ban_globalStatus or args.details:
         result += f"{fail2ban.getGlobalDetails()}\n"
     if fail2ban_ip != "":
@@ -84,6 +99,7 @@ def main():
     df = Df(config.DF_PATHS, log)
     df_globalStatus = df.getGlobalStatus()
     result += f"# Occupation des disques : {'OK' if df_globalStatus else 'KO'}\n"
+    html += f"<div id=\"dfStatus\">Occupation des disques : {'OK' if df_globalStatus else 'KO'}</div>"
     if not df_globalStatus or args.details:
         #result = f"{df.getGlobalDetails(not args.details)}\n"
         result += f"{df.getGlobalDetails()}\n"
