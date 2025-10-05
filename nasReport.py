@@ -53,20 +53,21 @@ def main():
         display: table-cell;
         vertical-align: middle;
         text-align: center;
-        border-top: 1px solid red;
+        border-top: 1px solid blue;
         border-bottom: 1px solid blue;
         padding: 8px;
-        font-size: 1.4em;
+        font-size: 1.6rem;
+        letter-spacing: 0.2rem;
     }
     table.indicator {
         margin: 10px;
         width: 100%;
     }
     table.indicator td{
-        font-size: 1.2em;
+        font-size: 1.2rem;
     }
     img.icon {
-        width: 16px;
+        width: 1.4rem;
     }
     img.history {
         width: 100%;
