@@ -46,10 +46,13 @@ def main():
     result += f"{'Status du NAS': ^{40}}\n"
     result += f"{'-'*40}\n"
     css += """
+    body {
+        background-color: #ffffff !important;
+    }
     table.header {
         width: 100%;
     }
-    table.header td{
+    table.header td {
         display: table-cell;
         vertical-align: middle;
         text-align: center;
@@ -64,7 +67,7 @@ def main():
         margin: 10px;
         width: 100%;
     }
-    table.indicator td{
+    table.indicator td {
         font-size: 1.2rem;
     }
     img.icon {
