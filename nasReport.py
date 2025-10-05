@@ -45,18 +45,26 @@ def main():
     result += f"{'-'*40}\n"
     result += f"{'Status du NAS': ^{40}}\n"
     result += f"{'-'*40}\n"
-    css += """table.header td{
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
-    height: 100px;
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    padding: 8px;
+    css += """
+    table.header {
+        width: 100%;
+    }
+    table.header td{
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        height: 100px;
+        border-top: 1px solid red;
+        border-bottom: 1px solid blue;
+        padding: 8px;
     }
     table.indicator {
-    margin: 10px;
-    }"""
+        margin: 10px;
+    }
+    img.icon {
+        width: 16px;
+    }
+    """
     html += "<table class=\"header\"><tr><td>NAS report</td></tr></table>"
     html += "<table class=\"indicator\">"
 
@@ -67,7 +75,7 @@ def main():
     raid = Raid(config.RAID_PATHS, log)
     raid_globalStatus = raid.getGlobalStatus()
     result += f"# Etat des RAID : {'OK' if raid_globalStatus else 'KO'}\n"
-    html += f"<tr id=\"raidDevices\"><td>Etat des RAID</td><td><img src=\"cid:{'icon_good' if raid_globalStatus else 'icon_bad'}\" /></td></tr>"
+    html += f"<tr id=\"raidDevices\"><td>Etat des RAID</td><td><img class=\"icon\" src=\"cid:{'icon_good' if raid_globalStatus else 'icon_bad'}\" /></td></tr>"
     if not raid_globalStatus or args.details:
         result += f"{raid.getGlobalDetails()}\n"
 
@@ -78,7 +86,7 @@ def main():
     smart = Smart(config.HDD_PATHS, log)
     smart_globalStatus = smart.getGlobalStatus()
     result += f"# Santé des disques : {'OK' if smart_globalStatus else 'KO'}\n"
-    html += f"<tr id=\"smartHealth\"><td>Santé des disques</td><td><img src=\"cid:{'icon_good' if smart_globalStatus else 'icon_bad'}\" /></td></tr>"
+    html += f"<tr id=\"smartHealth\"><td>Santé des disques</td><td><img class=\"icon\" src=\"cid:{'icon_good' if smart_globalStatus else 'icon_bad'}\" /></td></tr>"
     if not smart_globalStatus or args.details:
         result += f"{smart.getGlobalDetails()}\n"
 
@@ -90,7 +98,7 @@ def main():
     fail2ban_globalStatus = fail2ban.getGlobalStatus()
     fail2ban_ip = fail2ban.getBannedIp()
     result += f"# Status de Fail2ban : {'OK' if fail2ban_globalStatus else 'KO'}\n"
-    html += f"<tr id=\"fail2ban\"><td>Status de Fail2ban</td><td><img src=\"cid:{'icon_good' if fail2ban_globalStatus else 'icon_bad'}\" /></td></tr>"
+    html += f"<tr id=\"fail2ban\"><td>Status de Fail2ban</td><td><img class=\"icon\" src=\"cid:{'icon_good' if fail2ban_globalStatus else 'icon_bad'}\" /></td></tr>"
     if not fail2ban_globalStatus or args.details:
         result += f"{fail2ban.getGlobalDetails()}\n"
     if fail2ban_ip != "":
@@ -103,7 +111,7 @@ def main():
     df = Df(config.DF_PATHS, log)
     df_globalStatus = df.getGlobalStatus()
     result += f"# Occupation des disques : {'OK' if df_globalStatus else 'KO'}\n"
-    html += f"<tr id=\"dfStatus\"><td>Occupation des disques</td><td><img src=\"cid:{'icon_good' if df_globalStatus else 'icon_bad'}\" /></td></tr>"
+    html += f"<tr id=\"dfStatus\"><td>Occupation des disques</td><td><img class=\"icon\" src=\"cid:{'icon_good' if df_globalStatus else 'icon_bad'}\" /></td></tr>"
     if not df_globalStatus or args.details:
         #result = f"{df.getGlobalDetails(not args.details)}\n"
         result += f"{df.getGlobalDetails()}\n"
