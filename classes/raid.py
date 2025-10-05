@@ -53,7 +53,7 @@ class Raid:
             self.logger.debug(f"Raid.getGlobalDetail")
             details = ""
             for dev in self.raidDevices:
-                details += f"Raid array {dev} : {"OK" if self.getRaidStatus(dev) else "KO"}\n"
+                details += f"Raid array {dev} : {'OK' if self.getRaidStatus(dev) else 'KO'}\n"
                 if (not badOnly) or (not self.getRaidStatus(dev)):
                     details += f"\t{' '.join(self.__getCheckCommand(dev))}\n"
                     details += f"\t{self.getRaidDetail(dev)}\n"

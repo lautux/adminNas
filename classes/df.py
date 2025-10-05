@@ -55,7 +55,7 @@ class Df:
             self.logger.debug(f"Df.getGlobalDetail")
             details = ""
             for mnt in self.mountPoints:
-                details += f"Df status of {mnt} : {"OK" if self.getDfStatus(mnt) else "KO"} ({self.getDfPercent(mnt)}%)\n"
+                details += f"Df status of {mnt} : {'OK' if self.getDfStatus(mnt) else 'KO'} ({self.getDfPercent(mnt)}%)\n"
                 if (not badOnly) or (not self.getDfStatus(mnt)):
                     details += f"\t{' '.join(self.__getCheckCommand(mnt))}\n"
                     details += f"\t{self.getDfDetail(mnt)}\n"
