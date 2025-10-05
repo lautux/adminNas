@@ -53,16 +53,23 @@ def main():
         display: table-cell;
         vertical-align: middle;
         text-align: center;
-        height: 100px;
         border-top: 1px solid red;
         border-bottom: 1px solid blue;
         padding: 8px;
+        font-size: 1.4em;
     }
     table.indicator {
         margin: 10px;
+        width: 100%;
+    }
+    table.indicator td{
+        font-size: 1.2em;
     }
     img.icon {
         width: 16px;
+    }
+    img.history {
+        width: 100%;
     }
     """
     html += "<table class=\"header\"><tr><td>NAS report</td></tr></table>"
@@ -123,7 +130,7 @@ def main():
     ###############################################################################
     dfHistory = History(log)
     dfHistory.getDfGraph(config.DF_HISTORY_PATH, config.DF_HISTORY_OUTPUT)
-    html += "<img src=\"cid:df_history\" alt=\"DF history\" />"
+    html += "<img class=\"history\" src=\"cid:df_history\" alt=\"DF history\" />"
     
     print(result)
     if(args.mailto is not None):
