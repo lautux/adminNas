@@ -57,6 +57,7 @@ def main():
         border-bottom: 1px solid blue;
         padding: 8px;
         font-size: 1.6rem;
+        font-weight: bold;
         letter-spacing: 0.2rem;
     }
     table.indicator {

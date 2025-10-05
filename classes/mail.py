@@ -4,6 +4,7 @@ import smtplib
 import config
 import traceback
 import os
+import re
 from classes.logger import Logger
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -41,12 +42,14 @@ class Mail:
             msg['Subject'] = mailSubject
             msg['Date'] = formatdate(localtime=True)
             if images:
+                htmlCIDs = re.findall(r'src="cid:([^"]+)"', html)
                 for cid, path in images.items():
-                    if os.path.exists(path):
-                        with open(path, 'rb') as fp:
-                            img = MIMEImage(fp.read())
-                            img.add_header('Content-ID', f'<{cid}>')
-                            msg.attach(img)
+                    if cid in htmlCIDs:
+                        if os.path.exists(path):
+                            with open(path, 'rb') as fp:
+                                img = MIMEImage(fp.read())
+                                img.add_header('Content-ID', f'<{cid}>')
+                                msg.attach(img)
             msg.attach(MIMEText(mailBody, 'html'))
             server = smtplib.SMTP(config.MAIL_SMTP, config.MAIL_PORT)
             server.starttls()  # Activer le mode TLS
