@@ -130,10 +130,12 @@ def main():
         to_addr = args.mailto
         subject = "NAS - Health report"
         mail = Mail(log)
-        bodyHTML = "<html><head><title>NAS Report</title></head>"
-        bodyHTML+= "<body>"
-        bodyHTML+= html
-        bodyHTML+= "</body>"
+        bodyHTML = "<html>"
+        bodyHTML += "<head>"
+        bodyHTML += "<title>NAS Report</title>"
+        bodyHTML += f"<style type=\"text/css\">{css}</style>"
+        bodyHTML += "</head>"
+        bodyHTML += f"<body>{html}</body>"
         images = {
             "df_history": config.DF_HISTORY_OUTPUT,
             "icon_good": config.ICON_GOOD,
