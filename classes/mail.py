@@ -42,7 +42,7 @@ class Mail:
             msg['Subject'] = mailSubject
             msg['Date'] = formatdate(localtime=True)
             if images:
-                htmlCIDs = re.findall(r'src="cid:([^"]+)"', html)
+                htmlCIDs = re.findall(r'src="cid:([^"]+)"', mailBody)
                 for cid, path in images.items():
                     if cid in htmlCIDs:
                         if os.path.exists(path):
