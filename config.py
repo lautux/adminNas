@@ -24,5 +24,5 @@ NAS_TEST_PATH = "/mnt/raid4to/test/"
 PCLOUD_TEST_PATH = "/NAS/test/"
 NAS2PCLOUD_LOG_DIR = "/home/laurent/Documents/rclone/"
 RCLONE_OPTIONS = ["--verbose", "--progress"] #--dry-run
-ICON_GOOD = "icons/Gnome-emblem-default.svg"
-ICON_BAD = "icons/Gnome-dialog-warning.svg"
+ICON_GOOD = "icons/Gnome-emblem-default.png"
+ICON_BAD = "icons/Gnome-dialog-warning.png"
