@@ -45,7 +45,7 @@ def main():
     result += f"{'-'*40}\n"
     result += f"{'Status du NAS': ^{40}}\n"
     result += f"{'-'*40}\n"
-    css += """tdHeader{
+    css += """table.header td{
     display: table-cell;
     vertical-align: middle;
     text-align: center;
@@ -53,8 +53,12 @@ def main():
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
     padding: 8px;
+    }
+    table.indicator {
+    margin: 10px;
     }"""
-    html += "<table><tr><td id=\"tdHeader\">NAS report</td></tr></table>"
+    html += "<table class=\"header\"><tr><td>NAS report</td></tr></table>"
+    html += "<table class=\"indicator\">"
 
 
     ###############################################################################
@@ -63,7 +67,7 @@ def main():
     raid = Raid(config.RAID_PATHS, log)
     raid_globalStatus = raid.getGlobalStatus()
     result += f"# Etat des RAID : {'OK' if raid_globalStatus else 'KO'}\n"
-    html += f"<div id=\"raidDevices\">Etat des RAID : {'OK' if raid_globalStatus else 'KO'}</div>"
+    html += f"<tr id=\"raidDevices\"><td>Etat des RAID</td><td><img src=\"{config.ICON_GOOD if raid_globalStatus else config.ICON_BAD}\" /></td></tr>"
     if not raid_globalStatus or args.details:
         result += f"{raid.getGlobalDetails()}\n"
 
@@ -74,7 +78,7 @@ def main():
     smart = Smart(config.HDD_PATHS, log)
     smart_globalStatus = smart.getGlobalStatus()
     result += f"# Santé des disques : {'OK' if smart_globalStatus else 'KO'}\n"
-    html += f"<div id=\"smartHealth\">Santé des disques : {'OK' if smart_globalStatus else 'KO'}</div>"
+    html += f"<tr id=\"smartHealth\"><td>Santé des disques</td><td><img src=\"{config.ICON_GOOD if smart_globalStatus else config.ICON_BAD}\" /></td></tr>"
     if not smart_globalStatus or args.details:
         result += f"{smart.getGlobalDetails()}\n"
 
@@ -86,7 +90,7 @@ def main():
     fail2ban_globalStatus = fail2ban.getGlobalStatus()
     fail2ban_ip = fail2ban.getBannedIp()
     result += f"# Status de Fail2ban : {'OK' if fail2ban_globalStatus else 'KO'}\n"
-    html += f"<div id=\"fail2ban\">Status de Fail2ban : {'OK' if fail2ban_globalStatus else 'KO'}</div>"
+    html += f"<tr id=\"fail2ban\"><td>Status de Fail2ban</td><td><img src=\"{config.ICON_GOOD if fail2ban_globalStatus else config.ICON_BAD}\" /></td></tr>"
     if not fail2ban_globalStatus or args.details:
         result += f"{fail2ban.getGlobalDetails()}\n"
     if fail2ban_ip != "":
@@ -99,17 +103,19 @@ def main():
     df = Df(config.DF_PATHS, log)
     df_globalStatus = df.getGlobalStatus()
     result += f"# Occupation des disques : {'OK' if df_globalStatus else 'KO'}\n"
-    html += f"<div id=\"dfStatus\">Occupation des disques : {'OK' if df_globalStatus else 'KO'}</div>"
+    html += f"<tr id=\"dfStatus\"><td>Occupation des disques</td><td><img src=\"{config.ICON_GOOD if df_globalStatus else config.ICON_BAD}\" /></td></tr>"
     if not df_globalStatus or args.details:
         #result = f"{df.getGlobalDetails(not args.details)}\n"
         result += f"{df.getGlobalDetails()}\n"
 
+    html += "</table>"
 
     ###############################################################################
     # DF history
     ###############################################################################
     dfHistory = History(log)
     dfHistory.getDfGraph(config.DF_HISTORY_PATH, config.DF_HISTORY_OUTPUT)
+    html += "<img src=\"cid:df_history\" alt=\"DF history\" />"
     
     print(result)
     if(args.mailto is not None):
@@ -118,8 +124,7 @@ def main():
         mail = Mail(log)
         bodyHTML = "<html><head><title>NAS Report</title></head>"
         bodyHTML+= "<body>"
-        bodyHTML+= f"<pre>{result}</pre>"
-        bodyHTML+= "<img src=\"cid:df_history\" alt=\"DF history\" />"
+        bodyHTML+= html
         bodyHTML+= "</body>"
         images = {
             "df_history": config.DF_HISTORY_OUTPUT,
