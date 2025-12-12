@@ -9,6 +9,7 @@ DF_THREATHOLD = 80 # Statut KO si > 80%
 DF_HISTORY_PATH = "/data/history"
 #DF_HISTORY_PATH = "C:/LAME/Perso/history"
 DF_HISTORY_FILE_FORMAT = "df_*.log"
+DF_HISTORY_FILE_FORMAT = "df_202512*.log"
 DF_HISTORY_OUTPUT = "/tmp/df_chart.png"
 #DF_HISTORY_OUTPUT = "C:/temp/df_chart.png"
 MAIL_SMTP = "smtp.free.fr"
