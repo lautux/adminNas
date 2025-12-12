@@ -1,6 +1,7 @@
 #! /usr/bin/python3
 
 from datetime import datetime, timedelta
+import os
 import traceback
 from classes.logger import Logger
 import config
@@ -42,8 +43,8 @@ class History:
             beginDate = currentDate - timedelta(days=31)
             allFiles = dataDir.glob(config.DF_HISTORY_FILE_FORMAT)
             for f in allFiles:
-                print(str(f))
-                dateFile = datetime.strptime(str(f)[3:11], "%Y%m%d")
+                basenameFile = os.path.basename(f)
+                dateFile = datetime.strptime(basenameFile[3:11], "%Y%m%d")
                 if beginDate <= dateFile <= currentDate:
                     dataFiles.append(f)
 
