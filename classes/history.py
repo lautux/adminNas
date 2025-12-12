@@ -42,6 +42,7 @@ class History:
             beginDate = currentDate - timedelta(days=31)
             allFiles = dataDir.glob(config.DF_HISTORY_FILE_FORMAT)
             for f in allFiles:
+                print(str(f))
                 dateFile = datetime.strptime(str(f)[3:11], "%Y%m%d")
                 if beginDate <= dateFile <= currentDate:
                     dataFiles.append(f)
