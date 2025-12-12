@@ -40,7 +40,7 @@ class History:
             #dataFiles = list(dataDir.glob(config.DF_HISTORY_FILE_FORMAT))
 
             currentDate = datetime.now()
-            beginDate = currentDate - timedelta(days=31)
+            beginDate = currentDate - timedelta(days=config.DF_HISTORY_NB_DAYS)
             allFiles = dataDir.glob(config.DF_HISTORY_FILE_FORMAT)
             for f in allFiles:
                 basenameFile = os.path.basename(f)
