@@ -1,6 +1,7 @@
 #! /usr/bin/python3
 
 from datetime import datetime, timedelta
+from datetime import datetime, timedelta
 import traceback
 from classes.logger import Logger
 import config
@@ -33,6 +34,7 @@ class History:
             self.logger.debug(f"Df.getDfGraph - DEBUT")
             status = True
 
+            # 1. Get data from files
             # 1. Get data from files
             dataDir = Path(dataPath)
             dataFiles = []
