@@ -1,5 +1,6 @@
 #! /usr/bin/python3
 
+from datetime import datetime, timedelta
 import traceback
 from classes.logger import Logger
 import config
@@ -32,9 +33,19 @@ class History:
             self.logger.debug(f"Df.getDfGraph - DEBUT")
             status = True
 
-            # 1. Get data from file
+            # 1. Get data from files
             dataDir = Path(dataPath)
-            dataFiles = list(dataDir.glob(config.DF_HISTORY_FILE_FORMAT))
+            dataFiles = []
+            #dataFiles = list(dataDir.glob(config.DF_HISTORY_FILE_FORMAT))
+
+            currentDate = datetime.now()
+            beginDate = currentDate - timedelta(days=31)
+            allFiles = dataDir.glob(config.DF_HISTORY_FILE_FORMAT)
+            for f in allFiles:
+                dateFile = datetime.strptime(str(f)[3:11], "%Y%m%d")
+                if beginDate <= dateFile <= currentDate:
+                    dataFiles.append(f)
+
             df = pd.concat([pd.read_csv(f, sep=r'\s+', header=None, names=['timestamp', 'total', 'used', 'free', 'percent', 'partition']) for f in dataFiles], ignore_index=True)
             #df = pd.read_csv("C:/LAME/Perso/history/df_data2.txt", sep=r'\s+', header=None, names=['timestamp', 'total', 'used', 'free', 'percent', 'partition'])
             df['datetime'] = pd.to_datetime(df['timestamp'], format='%Y%m%d_%H%M%S')
