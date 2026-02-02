@@ -71,7 +71,7 @@ class Raid:
             for line in self.getRaidDetail(device).splitlines():
                 if "State :" in line:
                     state = line.split(":")[1].strip()
-            status = (state == "clean")
+            status = ("clean" in state)
         except Exception as e:
             status = False
             self.logger.error(f"Exception occured : {traceback.format_exc()}")
